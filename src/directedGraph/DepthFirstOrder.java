@@ -41,10 +41,6 @@ public class DepthFirstOrder<V> {
     }
 
 
-    private void visitDepthFirst(DirectedGraph<V>g, V vertex){
-        Set<V> visited = new TreeSet<>();
-        visitDepthFirst(g,vertex,visited);
-    }
 
     private void visitDepthFirst(DirectedGraph<V> g, V vertex, Set<V> visited) {
         visited.add(vertex);
