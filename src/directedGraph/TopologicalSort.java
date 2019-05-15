@@ -22,10 +22,9 @@ public class TopologicalSort<V> {
 	 * @param g gerichteter Graph.
 	 */
 	public TopologicalSort(DirectedGraph<V> g) {
-		Deque<V> stack = new ArrayDeque<>();
         inDeg = new TreeMap<>();
         for(V v: g.getVertexSet()){
-        	inDeg.put(v,g.getSuccessorVertexSet(v).size());
+        	inDeg.put(v,g.getPredecessorVertexSet(v).size());
         	if(inDeg.get(v) == 0){
         		q.add(v);
 			}
@@ -33,18 +32,18 @@ public class TopologicalSort<V> {
 
 		while(!q.isEmpty()){
 			V v = q.remove();
-			stack.push(v);
-			for(V pred :g.getPredecessorVertexSet(v)){
-				int neighbours = inDeg.get(pred);
+			ts.add(v);
+			for(V succ :g.getSuccessorVertexSet(v)){
+				int neighbours = inDeg.get(succ);
 				if(neighbours == 1){
-					q.add(pred);
+					q.add(succ);
 				}
-				inDeg.put(pred, neighbours-1);
+				inDeg.put(succ, neighbours-1);
 				inDeg.put(v, inDeg.get(v)-1);
 
 			}
 		}
-        ts.addAll(stack);
+
 		ts = ts.size() != g.getNumberOfVertexes() ? null : ts;
     }
     
